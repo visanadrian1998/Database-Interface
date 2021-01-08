@@ -114,10 +114,58 @@ li h2{
     transform: translate(-50%, -50%) rotate(-45deg);
     color:white;
 }
+.lock{
+    position:absolute;
+    top:1%;
+    right:2%;
+    cursor:pointer;
+    z-index:999;
+}
+.login{
+    position:absolute;
+    height:100%;
+    width:250px;
+    background:#f9d230;
+    right:0;
+    opacity:0;
+    z-index:998;
+    transition: 0.5s;
+    display:flex;
+    justify-content: center;
+}
+.login.active{
+    opacity:1;
+    z-index:1000;
+}
+.close{
+    position:absolute;
+    top:1%;
+    right:4%;
+    width:30px;
+    height:30px;
+    cursor:pointer;
+    z-index:999;
+}
+.login-form{
+    text-align:center;
+    position: absolute;
+    top:5%;  
+}
 </style>
 <body>
 <div class="header">
     <h2 class="header-title">MATERIALE CONSTRUCTII</h2>
+</div>
+<img class="lock" src="lock.svg" alt="lock"/>
+<div class="login">
+    <img class="close" src="close.svg" alt="close"/>
+    <form class="login-form">
+        <h2>Login</h2>
+        <h3>Username</h3>
+        <input type="text"/>
+        <h3>Password</h3>
+        <input type="password"/>
+    </form>
 </div>
 <ul>
     <a href="angajati.html">
@@ -141,4 +189,15 @@ li h2{
 </ul>
 
 </body>
+<script>
+    const login = document.getElementsByClassName("login")[0];
+    const lock = document.getElementsByClassName("lock")[0];
+    lock.onclick = () => {
+        login.classList.add('active');
+    }
+    const close = document.getElementsByClassName("close")[0];
+    close.onclick = () => {
+        login.classList.remove('active');
+    }
+</script>
 </html>
