@@ -5,7 +5,6 @@
   font-family: Lato-Regular;
   src: url("Lato-Regular.ttf");
 }
-
 body{
     font-family: Lato-Regular;
     margin:0;
@@ -22,7 +21,7 @@ body{
     display:flex;
     justify-content: flex-start;
     align-items: center;
-    box-shadow: 0px 13px 17px -12px #f9d230;
+    /* box-shadow: 0px 13px 17px -12px #f9d230; */
 }
 .header-title{
     padding-left: 50px;
@@ -46,13 +45,11 @@ ul li{
     width:200px;
     height:200px;
     background: #f9d230;
-    /* background:white; */
     transform:rotate(45deg);
     margin:-100px;
     overflow:hidden;
     cursor:pointer;
-    /* opacity:0.7; */
-    box-shadow: #f9d230 1px 1px 7px;
+    /* box-shadow: #f9d230 1px 1px 7px; */
 }
 
 ul li:hover{
@@ -66,47 +63,35 @@ ul li:hover{
     transition:0.5s;
 }
 
-.diamond1:hover{
-  /* top:-100px; */
-  transform:scale(1.25) rotate(45deg);
-  z-index:9999;
-}
+
 .diamond2{
     bottom:0;
     left:25%;
     transition:0.5s;
 }
 
-.diamond2:hover{
-  bottom:-50px;
-}
+
 .diamond3{
     top:0;
     left:50%;
     transition:0.5s;
 }
 
-.diamond3:hover{
-  top:-50px;
-}
+
 .diamond4{
     bottom:0;
     left:75%;
     transition:0.5s;
 }
 
-.diamond4:hover{
-  bottom:-50px;
-}
+
 .diamond5{
     top:0;
     left:100%;
     transition:0.5s;
 }
 
-.diamond5:hover{
-  top:-50px;
-}
+
 li h2{
     position:absolute;
     top:40%;
@@ -127,16 +112,15 @@ li h2{
     width:250px;
     background:#f9d230;
     right:0;
-    opacity:0;
     z-index:998;
     transition: 0.5s;
-    display:flex;
+    display:none;
     justify-content: center;
 }
-.login.active{
-    opacity:1;
-    z-index:1000;
-}
+ .login.active{
+    display:flex;
+    z-index:1000; 
+} 
 .close{
     position:absolute;
     top:1%;
@@ -151,6 +135,39 @@ li h2{
     position: absolute;
     top:5%;  
 }
+.usernameDiv,.passwordDiv{
+    border-bottom: 2px solid black;
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+}
+.usernameLogo,.passwordLogo{
+    margin-bottom:5px;
+    width:30px;
+    height:30px;
+    margin-right:5px;
+}
+input{
+    border:none;
+    outline:none;
+    background:none;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+::placeholder{
+        color:black;
+}
+.loginButton,.registerButton{
+    width:100%;
+    border:2px solid black;
+    padding:5px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight: bold;
+    margin-bottom:15px;
+    border-radius:5px;
+}
+
 </style>
 <body>
 <div class="header">
@@ -159,45 +176,82 @@ li h2{
 <img class="lock" src="lock.svg" alt="lock"/>
 <div class="login">
     <img class="close" src="close.svg" alt="close"/>
-    <form class="login-form">
+    <form action="post" class="login-form">
         <h2>Login</h2>
-        <h3>Username</h3>
-        <input type="text"/>
-        <h3>Password</h3>
-        <input type="password"/>
+        <div class="usernameDiv">
+        <img class="usernameLogo" src="user.svg" alt="user"></img>
+        <input type="text" placeholder="Username"/>
+        </div>
+        <div class="passwordDiv">
+        <img class="passwordLogo" src="lock2.svg" alt="password"></img>
+        <input type="password" placeholder="Password"/>
+        </div>
+        <input class="loginButton" type="submit" value="Login"/>
+        <a href="inregistrare.html">
+        <input class="registerButton" type="button" value="Inregistrare"/>
+        </a>
     </form>
 </div>
 <ul>
     <a href="angajati.html">
-    <li class="diamond1">
+    <li class="diamond1 topDiamond">
         <h2>ANGAJATI</h2>
     </li>
     </a>
-    <li class="diamond2">
+    <li class="diamond2 bottomDiamond">
         <h2>Vizualizeaza</h2>
     </li>
-    <li class="diamond3">
+    <li class="diamond3 topDiamond">
         <h2>Sterge</h2>
     </li>
-    <li class="diamond4">
+    <li class="diamond4 bottomDiamond">
         <h2>Adauga</h2>
     </li>
-    <li class="diamond5">
+    <li class="diamond5 topDiamond">
         <h2>Adauga</h2>
     </li>
     
 </ul>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     const login = document.getElementsByClassName("login")[0];
     const lock = document.getElementsByClassName("lock")[0];
-    lock.onclick = () => {
+    const topDiamonds = document.getElementsByClassName("topDiamond");
+    const topDiamondsArray = Array.from(topDiamonds);
+    const bottomDiamonds = document.getElementsByClassName("bottomDiamond");
+    const bottomDiamondsArray = Array.from(bottomDiamonds);
+    $(".lock").click(function(){
         login.classList.add('active');
-    }
-    const close = document.getElementsByClassName("close")[0];
-    close.onclick = () => {
+        $(".login").fadeIn(3000);
+    });
+    $(".close").click(function(){
         login.classList.remove('active');
+        $(".login").fadeOut(3000);
+    });
+    topDiamondsArray.forEach((topDiamond) => {
+        topDiamond.onmouseover = () => {
+        topDiamond.style.top="-50px";
     }
+        topDiamond.onmouseleave = () => {
+        setTimeout(
+            function(){
+                topDiamond.style.top="0";
+            },500);
+    }
+    })
+    bottomDiamondsArray.forEach((bottomDiamond) => {
+        bottomDiamond.onmouseover = () => {
+        bottomDiamond.style.bottom="-50px";
+    }
+        bottomDiamond.onmouseleave = () => {
+        setTimeout(
+            function(){
+                bottomDiamond.style.bottom="0";
+            },500);
+    }
+    })
+    
 </script>
 </html>
